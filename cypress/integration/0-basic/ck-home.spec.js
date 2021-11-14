@@ -6,8 +6,9 @@ let bestaetigenTitle = 'Bestätigung Newsletter-Anmeldung | Stress-Coaching Chri
   
 function testDblOptInForm(url) {
    cy.visit(url);
-   cy.get('input[placeholder="Vorname"]').type(subscriberName);
-   cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
+   cy.get('input#et_pb_signup_firstname').should('be.visible');
+   cy.get('input#et_pb_signup_firstname').type(subscriberName);
+   cy.get('input#et_pb_signup_email').type(subscriberMail);
    cy.get('a.et_pb_newsletter_button').click();
    cy.title().should('eq', bestaetigenTitle);
 }
@@ -17,7 +18,7 @@ function testDblOptInPopUp(label) {
    cy.wait(200);
    cy.contains(label).scrollIntoView().click();
    // popup should be open
-   cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
+   cy.get('div.et_bloom_popup.et_bloom_optin').should('be.visible'); 
    cy.get('input[placeholder="Name"]').type(subscriberName);
    cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
    cy.contains('Jetzt anmelden!').click();
@@ -33,11 +34,6 @@ describe('CK-Homepage Testing', () => {
       cy.wait(500);
    })
 
-/**
-   it('Page load', () => {
-      cy.get('.et-l--footer');
-   })
-**/
    it('Formular Freebie', () => {
       testDblOptInForm('https://christine-kuehnle.de/freebie/');  
    })
@@ -50,13 +46,11 @@ describe('CK-Homepage Testing', () => {
       testDblOptInForm('https://christine-kuehnle.de/blog/');
    })
 
-/***   
+/***  
    it('Formular Blog Post', () => {
       testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
    })
-***/
    
-   /***
    it('Popup Startseite', () => {
       testDblOptInPopUp('Ich möchte den Stresstest!');
    })
@@ -69,7 +63,7 @@ describe('CK-Homepage Testing', () => {
       cy.visit('https://christine-kuehnle.de/stress-coaching/');
       testDblOptInPopUp('Jetzt den Stresstest machen');
    })
-   ***/
+***/
 })
 
 
