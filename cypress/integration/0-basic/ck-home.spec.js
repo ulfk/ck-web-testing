@@ -1,52 +1,79 @@
 /// <reference types="cypress" />
 
-// 
-
 let subscriberName = 'cypress-testing';
 let subscriberMail = 'cypress-testing@christine-kuehnle.de';
+let bestaetigenTitle = 'Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle';
   
 function testDblOptInForm(url) {
-  cy.visit(url);
-  cy.get('input[placeholder="Vorname"]').type(subscriberName);
-  cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
-  cy.get('a.et_pb_newsletter_button').click();
-  cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle');
+   cy.visit(url);
+   cy.get('input[placeholder="Vorname"]').type(subscriberName);
+   cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
+   cy.get('a.et_pb_newsletter_button').click();
+   cy.title().should('eq', bestaetigenTitle);
 }
 
+describe('CK-Homepage Testing', () => {
+  
+   beforeEach(() => {
+      cy.visit('https://christine-kuehnle.de');
+      cy.get('.animate__animated').contains('Alle akzeptieren').click();
+      //cy.get('#a14b1352f-7f77-472f-9606-7346489e14b0[style*="display: none"]');
+      cy.wait(500);
+   })
 
-describe('Ck-Homepage Testing', () => {
+/**
+   it('Page load', () => {
+      cy.get('.et-l--footer');
+   })
+**/
+   it('Formular Freebie', () => {
+      testDblOptInForm('https://christine-kuehnle.de/freebie/');  
+   })
   
-  beforeEach(() => {
-    cy.visit('https://christine-kuehnle.de');
-    cy.get('.animate__animated').contains('Alle akzeptieren').click();
-    //cy.get('#a14b1352f-7f77-472f-9606-7346489e14b0[style*="display: none"]');
-    cy.wait(500);
-  })
+   it('Formular Ueber-mich', () => {
+      testDblOptInForm('https://christine-kuehnle.de/ueber-mich/');
+   })
+  
+   it('Formular Blog', () => {
+      testDblOptInForm('https://christine-kuehnle.de/blog/');
+   })
+   
+   it('Popup Startseite', () => {
+      cy.get('.et_pb_image_wrap').first().click();
+      cy.wait(200);
+      cy.contains('Ich möchte den Stresstest!').scrollIntoView().click();
+      // popup should be open
+      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
+      cy.get('input[placeholder="Name"]').type(subscriberName);
+      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
+      cy.contains('Jetzt anmelden!').click();
+      cy.title().should('eq', bestaetigenTitle);
+   })
 
-  it('Page load', () => {
-    cy.get('.et-l--footer');
-  })
-  
-  it('Freebie Formular', () => {  
-    testDblOptInForm('https://christine-kuehnle.de/freebie/');  
-  })
-  
-  it('Ueber-mich Formular', () => {
-    testDblOptInForm('https://christine-kuehnle.de/ueber-mich/');
-  })
-  
-  /*it('Newsletter Homepage', () => {
-    cy.wait(500);
-    cy.show('.optin-popup');
-    cy.contains('Ich möchte den Stresstest!').parent().click();
-    cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible');
-    //cy.wait(1500);
-    cy.get('input[placeholder="Name"]').type(subscriberName);
-    cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
-    cy.get('a.et_pb_newsletter_button').click();
-    cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühne');
-
-  })*/
+   it('Popup Footer', () => {
+      cy.get('.et_pb_image_wrap').first().click();
+      cy.wait(200);
+      cy.contains('Ok, will ich!').scrollIntoView().click();
+      // popup should be open
+      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
+      cy.get('input[placeholder="Name"]').type(subscriberName);
+      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
+      cy.contains('Jetzt anmelden!').click();
+      cy.title().should('eq', bestaetigenTitle);
+   })
+   
+   it('Popup Stresscoaching', () => {
+      cy.visit('https://christine-kuehnle.de/stress-coaching/');
+      cy.get('.et_pb_image_wrap').first().click();
+      cy.wait(200);
+      cy.contains('Jetzt den Stresstest machen').scrollIntoView().click();
+      // popup should be open
+      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
+      cy.get('input[placeholder="Name"]').type(subscriberName);
+      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
+      cy.contains('Jetzt anmelden!').click();
+      cy.title().should('eq', bestaetigenTitle);
+   })
 })
 
 
