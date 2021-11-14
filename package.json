@@ -1,0 +1,22 @@
+{
+  "name": "ck-web-testing",
+  "version": "1.0.0",
+  "description": "cypress tests for website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ulfk/ck-web-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ulfk/ck-web-testing/issues"
+  },
+  "homepage": "https://github.com/ulfk/ck-web-testing#readme",
+  "devDependencies": {
+    "cypress": "^9.0.0"
+  }
+}
