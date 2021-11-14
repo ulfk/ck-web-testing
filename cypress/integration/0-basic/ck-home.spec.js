@@ -12,6 +12,18 @@ function testDblOptInForm(url) {
    cy.title().should('eq', bestaetigenTitle);
 }
 
+function testDblOptInPopUp(label) {
+   cy.get('.et_pb_image_wrap').first().click();
+   cy.wait(200);
+   cy.contains(label).scrollIntoView().click();
+   // popup should be open
+   cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
+   cy.get('input[placeholder="Name"]').type(subscriberName);
+   cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
+   cy.contains('Jetzt anmelden!').click();
+   cy.title().should('eq', bestaetigenTitle);
+}
+
 describe('CK-Homepage Testing', () => {
   
    beforeEach(() => {
@@ -34,46 +46,30 @@ describe('CK-Homepage Testing', () => {
       testDblOptInForm('https://christine-kuehnle.de/ueber-mich/');
    })
   
-   it('Formular Blog', () => {
+   it('Formular Blog Page', () => {
       testDblOptInForm('https://christine-kuehnle.de/blog/');
    })
+
+/***   
+   it('Formular Blog Post', () => {
+      testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
+   })
+***/
    
+   /***
    it('Popup Startseite', () => {
-      cy.get('.et_pb_image_wrap').first().click();
-      cy.wait(200);
-      cy.contains('Ich möchte den Stresstest!').scrollIntoView().click();
-      // popup should be open
-      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
-      cy.get('input[placeholder="Name"]').type(subscriberName);
-      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
-      cy.contains('Jetzt anmelden!').click();
-      cy.title().should('eq', bestaetigenTitle);
+      testDblOptInPopUp('Ich möchte den Stresstest!');
    })
 
    it('Popup Footer', () => {
-      cy.get('.et_pb_image_wrap').first().click();
-      cy.wait(200);
-      cy.contains('Ok, will ich!').scrollIntoView().click();
-      // popup should be open
-      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
-      cy.get('input[placeholder="Name"]').type(subscriberName);
-      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
-      cy.contains('Jetzt anmelden!').click();
-      cy.title().should('eq', bestaetigenTitle);
+      testDblOptInPopUp('Ok, will ich!');
    })
    
    it('Popup Stresscoaching', () => {
       cy.visit('https://christine-kuehnle.de/stress-coaching/');
-      cy.get('.et_pb_image_wrap').first().click();
-      cy.wait(200);
-      cy.contains('Jetzt den Stresstest machen').scrollIntoView().click();
-      // popup should be open
-      cy.get('div.et_bloom_popup.et_bloom_optin.et_bloom_resize.et_bloom_optin_1.et_bloom_trigger_click').should('be.visible'); 
-      cy.get('input[placeholder="Name"]').type(subscriberName);
-      cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
-      cy.contains('Jetzt anmelden!').click();
-      cy.title().should('eq', bestaetigenTitle);
+      testDblOptInPopUp('Jetzt den Stresstest machen');
    })
+   ***/
 })
 
 
