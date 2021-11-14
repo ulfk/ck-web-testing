@@ -1,19 +1,20 @@
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+// 
+
+let subscriberName = 'cypress-testing';
+let subscriberMail = 'cypress-testing@christine-kuehnle.de';
+  
+function testDblOptInForm(url) {
+  cy.visit(url);
+  cy.get('input[placeholder="Vorname"]').type(subscriberName);
+  cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
+  cy.get('a.et_pb_newsletter_button').click();
+  cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle');
+}
+
 
 describe('Ck-Homepage Testing', () => {
-  let subscriberName = 'cypress-testing';
-  let subscriberMail = 'cypress-testing@christine-kuehnle.de';
   
   beforeEach(() => {
     cy.visit('https://christine-kuehnle.de');
@@ -26,23 +27,14 @@ describe('Ck-Homepage Testing', () => {
     cy.get('.et-l--footer');
   })
   
-  it('Freebie Formular', () => {    
-    cy.visit('https://christine-kuehnle.de/freebie/');
-    cy.get('input[placeholder="Vorname"]').type(subscriberName);
-    cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
-    cy.get('a.et_pb_newsletter_button').click();
-    cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle');
+  it('Freebie Formular', () => {  
+    testDblOptInForm('https://christine-kuehnle.de/freebie/');  
   })
   
-  
-  
-  it('Ueber-mich Formular', () => {    
-    cy.visit('https://christine-kuehnle.de/ueber-mich/');
-    cy.get('input[placeholder="Vorname"]').type(subscriberName);
-    cy.get('input[placeholder="E-Mail Adresse"]').type(subscriberMail);
-    cy.get('a.et_pb_newsletter_button').click();
-    cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle');
+  it('Ueber-mich Formular', () => {
+    testDblOptInForm('https://christine-kuehnle.de/ueber-mich/');
   })
+  
   /*it('Newsletter Homepage', () => {
     cy.wait(500);
     cy.show('.optin-popup');
@@ -54,7 +46,11 @@ describe('Ck-Homepage Testing', () => {
     cy.get('a.et_pb_newsletter_button').click();
     cy.title('Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühne');
 
-  })*/  
+  })*/
+})
+
+
+  
 /*
   it('can add new todo items', () => {
     // We'll store our item text in a variable so we can reuse it
@@ -162,4 +158,3 @@ describe('Ck-Homepage Testing', () => {
       cy.contains('Clear completed').should('not.exist')
     })
   })*/
-})
