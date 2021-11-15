@@ -9,35 +9,43 @@ function updateSubscriber() {
    subscriberName = 'cypress-testing-'+time;
    subscriberMail = subscriberName+'@christine-kuehnle.de';
 }
-  
-function testDblOptInForm(url) {
+
+function visitAndAcceptCookies(url) {
    cy.visit(url);
+   cy.wait(500);
+   /*cy.intercept('POST', '/wp-json/real-cookie-banner/v1/consent?**', {
+     statusCode: 200,
+     body: {       
+     },
+   });*/
+   
+   cy.get("span:contains('Alle akzeptieren')").scrollIntoView().click({force: true});
+}
+   
+function testDblOptInForm(url) {
+   visitAndAcceptCookies(url);
    cy.get('input#et_pb_signup_firstname').should('be.visible');
    cy.get('input#et_pb_signup_firstname').type(subscriberName);
-   cy.get('input#et_pb_signup_email').type(subscriberMail);
+   cy.get('input#et_pb_signup_email',{force: true}).type(subscriberMail);
    cy.get('a.et_pb_newsletter_button').click();
    cy.title().should('eq', bestaetigenTitle);
 }
 
-function testDblOptInPopUp(label) {
-   cy.get('.et_pb_image_wrap').first().click();
-   cy.wait(200);
-   cy.contains(label).scrollIntoView().click();
+function testDblOptInPopUp(url, label) {
+   visitAndAcceptCookies(url);
+   cy.wait(500);
+   cy.get("a.optin-popup:contains('"+label+"')").scrollIntoView().click();
    // popup should be open
-   cy.get('div.et_bloom_popup.et_bloom_optin').should('be.visible'); 
-   cy.get('input[placeholder="Name"]').type(subscriberName);
-   cy.get('input[placeholder="E-Mail"]').type(subscriberMail);
-   cy.contains('Jetzt anmelden!').click();
+   //cy.get('div.et_bloom_popup.et_bloom_optin').should('be.visible'); 
+   cy.get('input[placeholder="Name"]',{force: true, waitForAnimations: true}).type(subscriberName);
+   cy.get('input[placeholder="E-Mail"]',{force: true, waitForAnimations: true}).type(subscriberMail);
+   cy.get("span:contains('Jetzt anmelden!')").click();
    cy.title().should('eq', bestaetigenTitle);
 }
 
 describe('CK-Homepage Testing', () => {
   
    beforeEach(() => {
-      cy.visit('https://christine-kuehnle.de');
-      cy.get('.animate__animated').contains('Alle akzeptieren').click();
-      //cy.get('#a14b1352f-7f77-472f-9606-7346489e14b0[style*="display: none"]');
-      cy.wait(500);
       updateSubscriber();
    })
 
@@ -53,24 +61,23 @@ describe('CK-Homepage Testing', () => {
       testDblOptInForm('https://christine-kuehnle.de/blog/');
    })
 
-/***  
    it('Formular Blog Post', () => {
       testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
    })
    
+   
    it('Popup Startseite', () => {
-      testDblOptInPopUp('Ich möchte den Stresstest!');
+      testDblOptInPopUp('https://christine-kuehnle.de', 'Ich möchte den Stresstest!');
    })
 
    it('Popup Footer', () => {
-      testDblOptInPopUp('Ok, will ich!');
+      testDblOptInPopUp('https://christine-kuehnle.de', 'Ok, will ich!');
    })
    
    it('Popup Stresscoaching', () => {
-      cy.visit('https://christine-kuehnle.de/stress-coaching/');
-      testDblOptInPopUp('Jetzt den Stresstest machen');
+      testDblOptInPopUp('https://christine-kuehnle.de/stress-coaching/', 'Jetzt den Stresstest machen');
    })
-***/
+   
 })
 
 
