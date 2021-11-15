@@ -3,6 +3,12 @@
 let subscriberName = 'cypress-testing';
 let subscriberMail = 'cypress-testing@christine-kuehnle.de';
 let bestaetigenTitle = 'Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle';
+
+function updateSubscriber() {
+   let time = new Date().getTime();
+   subscriberName = 'cypress-testing-'+time;
+   subscriberMail = subscriberName+'@christine-kuehnle.de';
+}
   
 function testDblOptInForm(url) {
    cy.visit(url);
@@ -32,6 +38,7 @@ describe('CK-Homepage Testing', () => {
       cy.get('.animate__animated').contains('Alle akzeptieren').click();
       //cy.get('#a14b1352f-7f77-472f-9606-7346489e14b0[style*="display: none"]');
       cy.wait(500);
+      updateSubscriber();
    })
 
    it('Formular Freebie', () => {
