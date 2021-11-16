@@ -60,12 +60,13 @@ describe('CK-Homepage Testing', () => {
    it('Formular Blog Page', () => {
       testDblOptInForm('https://christine-kuehnle.de/blog/');
    })
-
+   
+ /***
    it('Formular Blog Post', () => {
       testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
    })
    
-   /***
+  
    it('Popup Startseite', () => {
       testDblOptInPopUp('https://christine-kuehnle.de', 'Ich möchte den Stresstest!');
    })
