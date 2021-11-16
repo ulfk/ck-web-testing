@@ -65,7 +65,7 @@ describe('CK-Homepage Testing', () => {
       testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
    })
    
-   
+   /***
    it('Popup Startseite', () => {
       testDblOptInPopUp('https://christine-kuehnle.de', 'Ich möchte den Stresstest!');
    })
@@ -77,7 +77,7 @@ describe('CK-Homepage Testing', () => {
    it('Popup Stresscoaching', () => {
       testDblOptInPopUp('https://christine-kuehnle.de/stress-coaching/', 'Jetzt den Stresstest machen');
    })
-   
+   ***/
 })
 
 
