@@ -28,23 +28,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      #- name: Run a one-line script
-      #  run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      #- name: Run a multi-line script
-      #  run: |
-      #    echo Add other actions to build,
-      #    echo test, and deploy your project.
-
       - name: Cypress.io
-        # You may pin to the exact commit or the version.
-        # uses: cypress-io/github-action@f06537910911844bce953022f6d643a0f69fd73b
-        uses: cypress-io/github-action@v2.9.7
+        uses: cypress-io/github-action@v2.11.7
         with:
           # Sends test results to Cypress Dashboard
           record: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_VIDEO: false
+          
           # Set configuration values. Separate multiple values with a comma. The values set here override any values set in your configuration file.
           #config: # optional
           # Path to a JSON file where configuration values are set.
@@ -93,7 +86,3 @@ jobs:
           #cache-key: # optional
           # Whether or not to silence any Cypress specific output from stdout
           #quiet: # optional
-        env:
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_VIDEO: false
