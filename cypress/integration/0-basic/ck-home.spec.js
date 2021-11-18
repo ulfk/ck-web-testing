@@ -1,13 +1,13 @@
 /// <reference types="cypress" />
 
 let subscriberName = 'cypress-testing';
-let subscriberMail = 'cypress-testing@christine-kuehnle.de';
+let subscriberMail = 'cypress-testing@gmx.de';
 let bestaetigenTitle = 'Bestätigung Newsletter-Anmeldung | Stress-Coaching Christine Kühnle';
 
 function updateSubscriber() {
    let time = new Date().getTime();
    subscriberName = 'cypress-testing-'+time;
-   subscriberMail = subscriberName+'@christine-kuehnle.de';
+   subscriberMail = subscriberName+'@gmx.de';
 }
 
 function visitAndAcceptCookies(url) {
@@ -46,7 +46,7 @@ function testDblOptInPopUp(url, label) {
 describe('CK-Homepage Testing', () => {
   
    beforeEach(() => {
-      updateSubscriber();
+      //updateSubscriber();
    })
 
    it('Formular Freebie', () => {
