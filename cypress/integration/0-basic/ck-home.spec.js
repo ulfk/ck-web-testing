@@ -56,11 +56,11 @@ describe('CK-Homepage Testing', () => {
    it('Formular Ueber-mich', () => {
       testDblOptInForm('https://christine-kuehnle.de/ueber-mich/');
    })
-  
+  /**
    it('Formular Blog Page', () => {
       testDblOptInForm('https://christine-kuehnle.de/blog/');
    })
-   
+   **/
  /***
    it('Formular Blog Post', () => {
       testDblOptInForm('https://christine-kuehnle.de/erfolgreiches-stressmanagement/');
